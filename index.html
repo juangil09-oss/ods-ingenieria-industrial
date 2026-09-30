@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal ODS | Revista Digital & Blog Interactivo</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        odsRed: '#E5243B',
+                        odsYellow: '#DDA63A',
+                        odsGreen: '#4C9F38',
+                        odsDarkRed: '#C5192D',
+                        odsOrangeRed: '#FF3A21',
+                        odsBlue: '#26BDE2',
+                        odsBrightYellow: '#FCC30B',
+                        odsMaroon: '#A21942',
+                        odsOrange: '#FD6925',
+                        odsPink: '#DD1367',
+                        odsGold: '#FD9D24',
+                        odsMustard: '#BF8B2E',
+                        odsForestGreen: '#3F7E44',
+                        odsOceanBlue: '#0A97D9',
+                        odsLime: '#56C02B',
+                        odsNavy: '#00689D',
+                        odsDarkNavy: '#19486A'
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts & Font Awesome Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 9999px;
+        }
+        .flip-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-800 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col selection:bg-emerald-500 selection:text-white">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 glass shadow-sm transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+            
+            <!-- Logo -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-emerald-500 via-teal-500 to-blue-600 flex items-center justify-center text-white shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+                    <i class="fa-solid me-0 fa-globe text-xl"></i>
+                </div>
+                <div>
+                    <span class="font-extrabold text-lg sm:text-xl tracking-tight bg-gradient-to-r from-emerald-600 via-teal-600 to-cyan-600 dark:from-emerald-400 dark:to-cyan-400 bg-clip-text text-transparent">
+                        ODS Agenda 2030
+                    </span>
+                    <span class="block text-xs font-medium text-slate-500 dark:text-slate-400">Ingeniería Industrial • Formulación y Evaluación de Proyectos</span>
+                </div>
+            </a>
+
+            <!-- Search Bar (Desktop) -->
+            <div class="hidden md:flex flex-1 max-w-xs relative">
+                <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                <input type="text" id="searchInput" placeholder="Buscar ODS, metas o palabras..." 
+                       class="w-full pl-10 pr-4 py-2 text-sm bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700/60 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500 transition-all dark:text-slate-100 placeholder-slate-400">
+            </div>
+
+            <!-- Navigation Menu & Actions -->
+            <div class="flex items-center gap-3">
+                <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-slate-600 dark:text-slate-300">
+                    <a href="#revista" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Revista Digital</a>
+                    <a href="#ods-grid" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Los 17 ODS</a>
+                    <a href="#articulos" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Reflexiones</a>
+                    <a href="#equipo" class="hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors">Mesa Redonda</a>
+                </nav>
+
+                <!-- Dark Mode Toggle Button -->
+                <button id="themeToggle" aria-label="Cambiar tema" class="w-10 h-10 rounded-full bg-slate-200/80 dark:bg-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">
+                    <i class="fa-solid fa-moon dark:hidden"></i>
+                    <i class="fa-solid fa-sun hidden dark:block text-amber-400"></i>
+                </button>
+
+                <!-- Mobile menu button -->
+                <button id="mobileMenuBtn" class="lg:hidden w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-700 dark:text-slate-200">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden lg:hidden px-4 pt-2 pb-6 border-t border-slate-200 dark:border-slate-800 space-y-3 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md">
+            <div class="pt-2">
+                <div class="relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm"></i>
+                    <input type="text" id="searchInputMobile" placeholder="Buscar ODS..." 
+                           class="w-full pl-10 pr-4 py-2 text-sm bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-full focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                </div>
+            </div>
+            <a href="#revista" class="block py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-emerald-500">Revista Digital</a>
+            <a href="#ods-grid" class="block py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-emerald-500">Los 17 ODS</a>
+            <a href="#articulos" class="block py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-emerald-500">Reflexiones y Comentarios</a>
+            <a href="#equipo" class="block py-2 text-sm font-medium text-slate-700 dark:text-slate-200 hover:text-emerald-500">Equipo Mesa Redonda</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
+        <div class="absolute inset-0 -z-10 opacity-30 dark:opacity-20 pointer-events-none">
+            <div class="absolute -top-40 -right-40 w-96 h-96 bg-emerald-400 rounded-full filter blur-3xl"></div>
+            <div class="absolute top-60 -left-40 w-96 h-96 bg-cyan-400 rounded-full filter blur-3xl"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100 dark:bg-emerald-950/80 border border-emerald-300 dark:border-emerald-800/80 text-emerald-800 dark:text-emerald-300 text-xs sm:text-sm font-semibold mb-6 animate-pulse">
+                <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                Proyecto de Ingeniería Industrial | Formulación y Evaluación de Proyectos
+            </div>
+            
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-slate-900 dark:text-white max-w-4xl mx-auto leading-tight">
+                Construyendo un Futuro Sostenible: <span class="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 bg-clip-text text-transparent">Nuestra Agenda ODS</span>
+            </h1>
+
+            <p class="mt-6 text-base sm:text-lg text-slate-600 dark:text-slate-300 max-w-2xl mx-auto font-light leading-relaxed">
+                Portal interactivo desarrollado para la asignatura de <strong>Formulación y Evaluación de Proyectos</strong> del programa de <strong>Ingeniería Industrial</strong>. Explora los 17 Objetivos de Desarrollo Sostenible, consulta la revista digital y aporta tus reflexiones para la mesa redonda.
+            </p>
+
+            <div class="mt-8 flex flex-wrap items-center justify-center gap-4">
+                <a href="#revista" class="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-emerald-500 to-teal-600 text-white font-semibold text-sm shadow-xl shadow-emerald-500/25 hover:shadow-emerald-500/40 hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-book-open"></i> Leer Revista Digital
+                </a>
+                <a href="#ods-grid" class="px-7 py-3.5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-semibold text-sm shadow-md hover:bg-slate-50 dark:hover:bg-slate-700/60 hover:scale-105 active:scale-95 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-grid-2"></i> Explorar los 17 ODS
+                </a>
+            </div>
+
+            <!-- Stats Bar -->
+            <div class="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+                <div class="p-4 rounded-2xl glass text-center border border-slate-200/50 dark:border-slate-800">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-emerald-500">17</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Objetivos Globales</div>
+                </div>
+                <div class="p-4 rounded-2xl glass text-center border border-slate-200/50 dark:border-slate-800">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-teal-500">169</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Metas Específicas</div>
+                </div>
+                <div class="p-4 rounded-2xl glass text-center border border-slate-200/50 dark:border-slate-800">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-cyan-500">2030</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Año Límite de Acción</div>
+                </div>
+                <div class="p-4 rounded-2xl glass text-center border border-slate-200/50 dark:border-slate-800">
+                    <div class="text-2xl sm:text-3xl font-extrabold text-blue-500">100%</div>
+                    <div class="text-xs text-slate-500 dark:text-slate-400 font-medium mt-1">Participación Estudiantil</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Revista Digital (Flipbook Showcase) -->
+    <section id="revista" class="py-16 bg-slate-100/70 dark:bg-slate-900/50 border-y border-slate-200/80 dark:border-slate-800 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                
+                <!-- Columna Izquierda: Información -->
+                <div class="flex-1 space-y-6 text-center lg:text-left">
+                    <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-cyan-100 dark:bg-cyan-950/80 text-cyan-800 dark:text-cyan-300 text-xs font-semibold">
+                        <i class="fa-solid fa-layer-group"></i> Edición Digital Especial
+                    </div>
+                    
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">
+                        Nuestra Revista Interactiva <span class="text-emerald-500">ODS en Acción</span>
+                    </h2>
+
+                    <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed">
+                        Diseñada colaborativamente en Canva y publicada en formato <strong>Flipbook interactivo</strong>. Pasa las páginas digitalmente, consulta estadísticas detalladas y prepárate para los debates de nuestra mesa redonda.
+                    </p>
+
+                    <div class="space-y-3 text-left">
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center text-xs mt-0.5">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <span class="text-sm text-slate-700 dark:text-slate-300">Formato interactivo con efecto de hoja real.</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center text-xs mt-0.5">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <span class="text-sm text-slate-700 dark:text-slate-300">Optimizada para ver desde celulares, tablets y PC.</span>
+                        </div>
+                        <div class="flex items-start gap-3">
+                            <div class="w-6 h-6 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center text-xs mt-0.5">
+                                <i class="fa-solid fa-check"></i>
+                            </div>
+                            <span class="text-sm text-slate-700 dark:text-slate-300">Incluye análisis, infografías y resúmenes para la mesa redonda.</span>
+                        </div>
+                    </div>
+
+                    <!-- Enlaces e Integración -->
+                    <div class="pt-4 flex flex-wrap justify-center lg:justify-start gap-4">
+                        <button onclick="openFlipbookModal()" class="px-6 py-3 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm shadow-lg shadow-emerald-600/30 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-expand"></i> Abrir Visor de Revista
+                        </button>
+                        
+                        <a id="externalFlipbookBtn" href="https://heyzine.com" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-2xl bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-medium text-sm hover:bg-slate-50 dark:hover:bg-slate-700 transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Ver en Heyzine / Canva
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Columna Derecha: Previsualización interactiva tipo Mockup -->
+                <div class="flex-1 w-full max-w-lg">
+                    <div class="relative group">
+                        <div class="absolute -inset-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 rounded-3xl blur opacity-30 group-hover:opacity-75 transition duration-500"></div>
+                        
+                        <div class="relative bg-white dark:bg-slate-800 rounded-3xl p-6 shadow-2xl border border-slate-200 dark:border-slate-700 text-center">
+                            <div class="aspect-[4/3] rounded-2xl bg-slate-900 overflow-hidden relative flex flex-col justify-between p-6 text-white shadow-inner">
+                                <div class="flex justify-between items-center text-xs font-semibold uppercase tracking-wider text-emerald-400">
+                                    <span>Revista Escolar</span>
+                                    <span>Vol. 1 • 2026</span>
+                                </div>
+                                <div class="my-auto space-y-2">
+                                    <i class="fa-solid fa-book-journal-whills text-5xl text-emerald-400 animate-float mb-2"></i>
+                                    <h3 class="text-xl sm:text-2xl font-bold">AGENDA ODS 2030</h3>
+                                    <p class="text-xs text-slate-300">Edición Especial Mesa Redonda</p>
+                                </div>
+                                <div class="text-xs text-slate-400 border-t border-slate-700 pt-3 flex justify-between items-center">
+                                    <span>17 Artículos</span>
+                                    <span class="text-emerald-400 flex items-center gap-1"><i class="fa-solid fa-circle text-[8px] animate-ping"></i> Publicación Interactiva</span>
+                                </div>
+                            </div>
+
+                            <button onclick="openFlipbookModal()" class="w-full mt-4 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-700/60 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium text-xs transition-colors flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-eye"></i> Haz clic para simular lectura digital
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Rejilla de los 17 ODS -->
+    <section id="ods-grid" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-3xl mx-auto mb-10">
+            <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white">
+                Explora los <span class="text-emerald-500">17 Objetivos</span>
+            </h2>
+            <p class="mt-3 text-slate-600 dark:text-slate-300 text-sm sm:text-base">
+                Selecciona cualquier ODS para abrir su ficha detallada de estudio, cifras clave y preguntas guía para la mesa redonda.
+            </p>
+
+            <!-- Categorías Filtros -->
+            <div class="mt-6 flex flex-wrap justify-center gap-2" id="filterContainer">
+                <button onclick="filterODS('todos')" class="filter-btn active-filter px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-emerald-500 text-white shadow-md">
+                    Todos
+                </button>
+                <button onclick="filterODS('personas')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700">
+                    👥 Personas
+                </button>
+                <button onclick="filterODS('planeta')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700">
+                    🌍 Planeta
+                </button>
+                <button onclick="filterODS('prosperidad')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700">
+                    📈 Prosperidad
+                </button>
+                <button onclick="filterODS('paz')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700">
+                    🕊️ Paz
+                </button>
+                <button onclick="filterODS('alianzas')" class="filter-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition-all bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700">
+                    🤝 Alianzas
+                </button>
+            </div>
+        </div>
+
+        <!-- ODS Cards Grid Dynamic Output -->
+        <div id="odsContainer" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <!-- Renderizado por JavaScript -->
+        </div>
+    </section>
+
+    <!-- Sección Blog / Reflexiones de la Clase -->
+    <section id="articulos" class="py-16 bg-slate-100/70 dark:bg-slate-900/60 border-t border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <span class="text-xs font-bold uppercase tracking-widest text-emerald-500">Foro de Discusión</span>
+                <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
+                    Reflexiones para la Mesa Redonda
+                </h2>
+                <p class="text-slate-600 dark:text-slate-300 text-sm mt-2">
+                    Deja tu comentario o aporte sobre el ODS que te correspondió para compartir ideas con el grupo antes de la presentación.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Columna 1 y 2: Formulario de Comentarios y Lista -->
+                <div class="lg:col-span-2 space-y-6">
+                    
+                    <!-- Form Card -->
+                    <div class="glass p-6 rounded-3xl shadow-lg border border-slate-200 dark:border-slate-800">
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-comment-dots text-emerald-500"></i> Publicar Aporte de Estudio
+                        </h3>
+
+                        <form id="commentForm" class="space-y-4">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Nombre / Estudiante</label>
+                                    <input type="text" id="commentAuthor" required placeholder="Tu nombre..." 
+                                           class="w-full px-4 py-2.5 text-sm rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">ODS Asignado</label>
+                                    <select id="commentODS" required class="w-full px-4 py-2.5 text-sm rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none">
+                                        <option value="">Selecciona tu ODS...</option>
+                                        <option value="ODS 1: Fin de la Pobreza">ODS 1: Fin de la Pobreza</option>
+                                        <option value="ODS 2: Hambre Cero">ODS 2: Hambre Cero</option>
+                                        <option value="ODS 3: Salud y Bienestar">ODS 3: Salud y Bienestar</option>
+                                        <option value="ODS 4: Educación de Calidad">ODS 4: Educación de Calidad</option>
+                                        <option value="ODS 5: Igualdad de Género">ODS 5: Igualdad de Género</option>
+                                        <option value="ODS 6: Agua Limpia">ODS 6: Agua Limpia</option>
+                                        <option value="ODS 7: Energía Asequible">ODS 7: Energía Asequible</option>
+                                        <option value="ODS 8: Trabajo Decente">ODS 8: Trabajo Decente</option>
+                                        <option value="ODS 9: Industria e Innovación">ODS 9: Industria e Innovación</option>
+                                        <option value="ODS 10: Reducción Desigualdades">ODS 10: Reducción Desigualdades</option>
+                                        <option value="ODS 11: Ciudades Sostenibles">ODS 11: Ciudades Sostenibles</option>
+                                        <option value="ODS 12: Producción Responsable">ODS 12: Producción Responsable</option>
+                                        <option value="ODS 13: Acción por el Clima">ODS 13: Acción por el Clima</option>
+                                        <option value="ODS 14: Vida Submarina">ODS 14: Vida Submarina</option>
+                                        <option value="ODS 15: Ecosistemas Terrestres">ODS 15: Ecosistemas Terrestres</option>
+                                        <option value="ODS 16: Paz y Justicia">ODS 16: Paz y Justicia</option>
+                                        <option value="ODS 17: Alianzas">ODS 17: Alianzas</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-600 dark:text-slate-400 mb-1">Tu síntesis / idea para la mesa redonda</label>
+                                <textarea id="commentText" rows="3" required placeholder="Escribe aquí los datos clave o tu reflexión..." 
+                                          class="w-full px-4 py-2.5 text-sm rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:ring-2 focus:ring-emerald-500 outline-none"></textarea>
+                            </div>
+
+                            <button type="submit" class="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-medium text-sm transition-all shadow-md shadow-emerald-600/20 flex items-center gap-2">
+                                <i class="fa-solid fa-paper-plane"></i> Publicar Reflexión
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Feed de Comentarios -->
+                    <div id="commentsFeed" class="space-y-4">
+                        <!-- Comentarios dinámicos cargados por JS -->
+                    </div>
+                </div>
+
+                <!-- Columna 3: Artículos Guía -->
+                <div class="space-y-4">
+                    <div class="glass p-6 rounded-3xl border border-slate-200 dark:border-slate-800">
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-lightbulb text-amber-500"></i> Tips para la Mesa Redonda
+                        </h3>
+                        <ul class="space-y-3 text-xs sm:text-sm text-slate-600 dark:text-slate-300">
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500 mt-1 text-xs"></i>
+                                <span><strong>Conversado, no leído:</strong> Explica las ideas clave con tus propias palabras desde tu sitio.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500 mt-1 text-xs"></i>
+                                <span><strong>Menciona una cifra clave:</strong> Un dato cuantitativo impactante le da solidez a tu aporte.</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <i class="fa-solid fa-circle-check text-emerald-500 mt-1 text-xs"></i>
+                                <span><strong>Conecta con la realidad local:</strong> Da un ejemplo de cómo se evidencia tu ODS en nuestro país o ciudad.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="glass p-6 rounded-3xl border border-slate-200 dark:border-slate-800 bg-gradient-to-br from-emerald-500/10 to-teal-500/10">
+                        <h3 class="text-base font-bold text-slate-900 dark:text-white mb-2">
+                            ¿Por qué la Agenda 2030?
+                        </h3>
+                        <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                            Aprobada en 2015 por 193 Estados miembros de la ONU, plantea 17 metas para erradicar la pobreza, proteger el planeta y asegurar la prosperidad para todos sin dejar a nadie atrás.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección Equipo / Mesa Redonda -->
+    <section id="equipo" class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center max-w-2xl mx-auto mb-12">
+            <span class="text-xs font-bold uppercase tracking-widest text-emerald-500">Trabajo en Equipo</span>
+            <h2 class="text-3xl font-extrabold text-slate-900 dark:text-white mt-1">
+                Integrantes de la Mesa Redonda
+            </h2>
+            <p class="text-slate-600 dark:text-slate-300 text-sm mt-2">
+                Consulta la distribución de temas y los responsables de cada ODS según el documento del proyecto.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6" id="teamContainer">
+            <!-- Tarjetas de integrantes del equipo cargadas dinámicamente -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-auto bg-slate-900 text-slate-400 py-12 border-t border-slate-800 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold">
+                    <i class="fa-solid fa-leaf"></i>
+                </div>
+                <div>
+                    <div class="text-white font-bold">Proyecto ODS Agenda 2030</div>
+                    <div class="text-xs text-slate-500">Ingeniería Industrial • Formulación y Evaluación de Proyectos</div>
+                </div>
+            </div>
+
+            <p class="text-xs text-center text-slate-500">
+                &copy; 2026 Portal Educativo de ODS. Creado para la presentación y revista estudiantil.
+            </p>
+
+            <div class="flex items-center gap-4 text-slate-400">
+                <a href="#ods-grid" class="hover:text-emerald-400 transition-colors"><i class="fa-solid fa-earth-americas text-lg"></i></a>
+                <a href="#revista" class="hover:text-emerald-400 transition-colors"><i class="fa-solid fa-book text-lg"></i></a>
+                <a href="#articulos" class="hover:text-emerald-400 transition-colors"><i class="fa-solid fa-comments text-lg"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal de Detalle de ODS -->
+    <div id="odsModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/70 backdrop-blur-md transition-all duration-300 opacity-0">
+        <div class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 overflow-hidden transform scale-95 transition-all duration-300 max-h-[90vh] flex flex-col">
+            
+            <!-- Modal Header -->
+            <div id="modalHeader" class="p-6 text-white relative flex justify-between items-start">
+                <div>
+                    <span id="modalCategory" class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-md mb-2">Categoría</span>
+                    <h3 id="modalTitle" class="text-2xl font-black">Título del ODS</h3>
+                </div>
+                <button onclick="closeODSModal()" class="w-9 h-9 rounded-full bg-black/20 hover:bg-black/40 text-white flex items-center justify-center transition-colors">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Modal Body Scrollable -->
+            <div class="p-6 space-y-6 overflow-y-auto custom-scrollbar text-sm text-slate-700 dark:text-slate-300 flex-1">
+                <div>
+                    <h4 class="font-bold text-slate-900 dark:text-white text-base mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-circle-info text-emerald-500"></i> Descripción General
+                    </h4>
+                    <p id="modalDesc" class="leading-relaxed"></p>
+                </div>
+
+                <div class="p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/60 border border-slate-200/60 dark:border-slate-700/60">
+                    <h4 class="font-bold text-slate-900 dark:text-white text-sm mb-1 flex items-center gap-2">
+                        <i class="fa-solid fa-chart-line text-blue-500"></i> Dato o Cifra Clave
+                    </h4>
+                    <p id="modalStat" class="text-xs text-slate-600 dark:text-slate-300 italic"></p>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-slate-900 dark:text-white text-base mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-bullseye text-red-500"></i> Retos Actuales
+                    </h4>
+                    <ul id="modalChallenges" class="list-disc list-inside space-y-1.5 text-xs sm:text-sm text-slate-600 dark:text-slate-300"></ul>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-slate-900 dark:text-white text-base mb-2 flex items-center gap-2">
+                        <i class="fa-solid fa-hands-holding-circle text-emerald-500"></i> Acciones Practicas desde el Aula
+                    </h4>
+                    <p id="modalActions" class="text-xs sm:text-sm leading-relaxed"></p>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="p-4 bg-slate-50 dark:bg-slate-800/80 border-t border-slate-200 dark:border-slate-800 flex justify-between items-center">
+                <span class="text-xs text-slate-500">Preparación para Mesa Redonda</span>
+                <button onclick="closeODSModal()" class="px-5 py-2 rounded-xl bg-slate-900 dark:bg-slate-100 text-white dark:text-slate-900 font-semibold text-xs hover:opacity-90 transition-opacity">
+                    Entendido
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Revista Digital (Simulador Viewer) -->
+    <div id="flipbookModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
+        <div class="bg-slate-900 w-full max-w-4xl h-[85vh] rounded-3xl overflow-hidden flex flex-col border border-slate-800 shadow-2xl">
+            <div class="p-4 bg-slate-800 flex items-center justify-between text-white border-b border-slate-700">
+                <div class="flex items-center gap-2 text-sm font-bold">
+                    <i class="fa-solid fa-book-open text-emerald-400"></i> Visor de Revista Digital ODS
+                </div>
+                <button onclick="closeFlipbookModal()" class="w-8 h-8 rounded-full bg-slate-700 hover:bg-slate-600 text-white flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            
+            <div class="flex-1 bg-slate-950 p-6 flex flex-col items-center justify-center text-center text-white relative">
+                <div class="max-w-md space-y-4">
+                    <div class="w-20 h-20 mx-auto rounded-3xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-4xl animate-pulse">
+                        <i class="fa-solid fa-newspaper"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold">¡Tu Revista Interactiva Lista!</h3>
+                    <p class="text-xs sm:text-sm text-slate-400 leading-relaxed">
+                        Aquí puedes visualizar la simulación de la revista. Si ya subiste tu PDF a <strong>Heyzine</strong> o <strong>Calaméo</strong>, o si usas el link de <strong>Canva</strong>, puedes hacer clic abajo para abrirlo directamente a pantalla completa.
+                    </p>
+                    <div class="pt-4 flex flex-col sm:flex-row gap-3 justify-center">
+                        <a id="modalFlipbookLink" href="https://heyzine.com" target="_blank" rel="noopener noreferrer" class="px-6 py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-sm transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Abrir Revista Completa
+                        </a>
+                        <button onclick="closeFlipbookModal()" class="px-6 py-3 rounded-2xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium text-sm transition-all">
+                            Cerrar Visor
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logica en JavaScript -->
+    <script>
+        const odsData = [
+            {
+                id: 1,
+                title: "Fin de la Pobreza",
+                category: "personas",
+                color: "#E5243B",
+                icon: "fa-hand-holding-dollar",
+                desc: "Poner fin a la pobreza en todas sus formas en todo el mundo, garantizando acceso a recursos básicos y protección social.",
+                stat: "Más de 700 millones de personas aún viven en situación de extrema pobreza globalmente.",
+                challenges: ["Acceso limitado a empleo digno", "Vulnerabilidad ante crisis climáticas y de salud", "Falta de sistemas de protección social integrales"],
+                actions: "Apoyar iniciativas locales de comercio justo, donaciones conscientes y concientización social."
+            },
+            {
+                id: 2,
+                title: "Hambre Cero",
+                category: "personas",
+                color: "#DDA63A",
+                icon: "fa-bowl-rice",
+                desc: "Poner fin al hambre, lograr la seguridad alimentaria, mejorar la nutrición y promover la agricultura sostenible.",
+                stat: "Alrededor del 10% de la población mundial padece hambre mientras se desperdicia 1/3 de la comida.",
+                challenges: ["Desperdicio masivo de alimentos", "Cambio climático que afecta las cosechas", "Falta de acceso a mercados para pequeños agricultores"],
+                actions: "Evitar el desperdicio de comida en casa y apoyar huertos comunitarios o escolares."
+            },
+            {
+                id: 3,
+                title: "Salud y Bienestar",
+                category: "personas",
+                color: "#4C9F38",
+                icon: "fa-heart-pulse",
+                desc: "Garantizar una vida sana y promover el bienestar para todos en todas las edades.",
+                stat: "Al menos la mitad de la población mundial carece de cobertura total de servicios de salud esenciales.",
+                challenges: ["Enfermedades transmisibles y crónicas", "Acceso desigual a vacunas y medicamentos", "Salud mental desatendida"],
+                actions: "Promover hábitos saludables, actividad física y concienciar sobre la salud mental en el colegio o universidad."
+            },
+            {
+                id: 4,
+                title: "Educación de Calidad",
+                category: "personas",
+                color: "#C5192D",
+                icon: "fa-graduation-cap",
+                desc: "Garantizar una educación inclusiva, equitativa y de calidad, y promover oportunidades de aprendizaje durante toda la vida.",
+                stat: "Más de 260 millones de niños y jóvenes están fuera de la escuela a nivel global.",
+                challenges: ["Infraestructura educativa deficiente", "Brecha digital y de conectividad", "Falta de capacitación docente continua"],
+                actions: "Compartir materiales educativos, tutorías entre pares y fomentar la lectura digital."
+            },
+            {
+                id: 5,
+                title: "Igualdad de Género",
+                category: "personas",
+                color: "#FF3A21",
+                icon: "fa-venus-mars",
+                desc: "Lograr la igualdad entre los géneros y empoderar a todas las mujeres y niñas.",
+                stat: "Al ritmo actual, tomará casi 130 años alcanzar la paridad de género completa.",
+                challenges: ["Brecha salarial de género", "Baja representación en liderazgos", "Violencia y estereotipos arraigados"],
+                actions: "Fomentar ambientes de respeto equitativo, denunciar prejuicios y apoyar el liderazgo femenino."
+            },
+            {
+                id: 6,
+                title: "Agua Limpia y Saneamiento",
+                category: "planeta",
+                color: "#26BDE2",
+                icon: "fa-droplet",
+                desc: "Garantizar la disponibilidad de agua y su gestión sostenible y el saneamiento para todos.",
+                stat: "1 de cada 3 personas no tiene acceso a agua potable salubre.",
+                challenges: ["Contaminación de fuentes hídricas", "Escasez de agua por sequías", "Uso ineficiente del recurso hídrico"],
+                actions: "Cerrar los grifos mientras no se usen, reportar fugas y reducir el uso de químicos contaminantes."
+            },
+            {
+                id: 7,
+                title: "Energía Asequible y No Contaminante",
+                category: "prosperidad",
+                color: "#FCC30B",
+                icon: "fa-bolt",
+                desc: "Garantizar el acceso a una energía asequible, segura, sostenible y moderna para todos.",
+                stat: "El 60% de las emisiones de gases de efecto invernadero provienen del consumo de energía fósil.",
+                challenges: ["Dependencia de combustibles fósiles", "Alto costo inicial de tecnologías limpias", "Falta de red en zonas rurales"],
+                actions: "Ahorrar luz apurando bombillos no usados y apoyar tecnologías solares y eficientes."
+            },
+            {
+                id: 8,
+                title: "Trabajo Decente y Crecimiento Económico",
+                category: "prosperidad",
+                color: "#A21942",
+                icon: "fa-chart-line",
+                desc: "Promover el crecimiento económico inclusivo y sostenible, el empleo pleno y productivo y el trabajo decente para todos.",
+                stat: "Cerca de la mitad de la fuerza laboral mundial trabaja en el sector informal.",
+                challenges: ["Desempleo juvenil elevado", "Condiciones laborales precarias", "Baja productividad informal"],
+                actions: "Apoyar la economía local, emprendimientos jóvenes y capacitarse en habilidades del futuro."
+            },
+            {
+                id: 9,
+                title: "Industria, Innovación e Infraestructura",
+                category: "prosperidad",
+                color: "#FD6925",
+                icon: "fa-industry",
+                desc: "Construir infraestructuras resilientes, promover la industrialización inclusiva y sostenible y fomentar la innovación.",
+                stat: "Las industrias manufactureras son un motor clave de empleo pero requieren transición ecológica urgente.",
+                challenges: ["Falta de presupuesto para I+D", "Brecha de conectividad a internet en regiones apartadas"],
+                actions: "Crear proyectos tecnológicos escolares con enfoque ecológico y promover el reciclaje industrial."
+            },
+            {
+                id: 10,
+                title: "Reducción de las Desigualdades",
+                category: "prosperidad",
+                color: "#DD1367",
+                icon: "fa-scale-balanced",
+                desc: "Reducir la desigualdad en y entre los países mediante políticas inclusivas.",
+                stat: "El 10% más rico posee más del 50% de los ingresos globales.",
+                challenges: ["Discriminación sistemática", "Distribución desigual de la riqueza", "Barreras de accesibilidad"],
+                actions: "Promover la inclusión social en el aula y apoyar causas que defienden grupos vulnerables."
+            },
+            {
+                id: 11,
+                title: "Ciudades y Comunidades Sostenibles",
+                category: "planeta",
+                color: "#FD9D24",
+                icon: "fa-city",
+                desc: "Lograr que las ciudades y los asentamientos humanos sean inclusivos, seguros, resilientes y sostenibles.",
+                stat: "Las ciudades generan más del 70% de las emisiones de carbono globales.",
+                challenges: ["Sobrepoblación y transporte ineficiente", "Mala gestión de residuos sólidos", "Poca zona verde urbana"],
+                actions: "Usar transporte activo (bicicleta/caminar), reciclar en la comunidad y cuidar los parques."
+            },
+            {
+                id: 12,
+                title: "Producción y Consumo Responsables",
+                category: "planeta",
+                color: "#BF8B2E",
+                icon: "fa-recycle",
+                desc: "Garantizar modalidades de consumo y producción sostenibles reduciendo la huella ecológica.",
+                stat: "Si la población alcanza los 9.600 millones en 2050, se necesitarían casi 3 planetas para sostener el estilo de vida actual.",
+                challenges: ["Uso excesivo de plásticos de un solo uso", "Cultura del 'usar y tirar'", "Baja tasa de reciclaje mundial"],
+                actions: "Aplicar la regla de las 3R (Reducir, Reutilizar, Reciclar) y consumir de forma consciente."
+            },
+            {
+                id: 13,
+                title: "Acción por el Clima",
+                category: "planeta",
+                color: "#3F7E44",
+                icon: "fa-temperature-arrow-up",
+                desc: "Adoptar medidas urgentes para combatir el cambio climático y sus efectos.",
+                stat: "La temperatura media global ya ha aumentado más de 1.1°C respecto a niveles preindustriales.",
+                challenges: ["Fenómenos meteorológicos extremos", "Descongelamiento de glaciares", "Poco compromiso de emisiones de CO2"],
+                actions: "Reducir la huella de carbono personal, plantar árboles y participar en campañas de concienciación."
+            },
+            {
+                id: 14,
+                title: "Vida Submarina",
+                category: "planeta",
+                color: "#0A97D9",
+                icon: "fa-fish-fins",
+                desc: "Conservar y utilizar sosteniblemente los océanos, los mares y los recursos marinos.",
+                stat: "Se estima que para 2050 podría haber más plástico que peces en el océano si no actuamos.",
+                challenges: ["Acidificación de océanos", "Pesca excesiva e ilegal", "Contaminación plástica masiva"],
+                actions: "Evitar plásticos descartables y no desechar residuos en ríos o playas."
+            },
+            {
+                id: 15,
+                title: "Vida de Ecosistemas Terrestres",
+                category: "planeta",
+                color: "#56C02B",
+                icon: "fa-tree",
+                desc: "Gestionar sosteniblemente los bosques, luchar contra la desertificación y detener la pérdida de biodiversidad.",
+                stat: "Cada año se pierden 10 millones de hectáreas de bosque en el mundo.",
+                challenges: ["Deforestación para agricultura", "Pérdida acelerada de especies", "Comercio ilegal de fauna"],
+                actions: "Sembrar plantas nativas, proteger áreas verdes locales y evitar el consumo de productos deforestadores."
+            },
+            {
+                id: 16,
+                title: "Paz, Justicia e Instituciones Sólidas",
+                category: "paz",
+                color: "#00689D",
+                icon: "fa-dove",
+                desc: "Promover sociedades pacíficas e inclusivas, facilitar el acceso a la justicia y crear instituciones eficaces e inclusivas.",
+                stat: "Miles de millones de personas viven en regiones afectadas por conflictos o debilidad institucional.",
+                challenges: ["Corrupción e impunidad", "Violencia interpersonal", "Falta de transparencia gubernamental"],
+                actions: "Resolver conflictos mediante el diálogo pacífico y promover la empatía en la comunidad."
+            },
+            {
+                id: 17,
+                title: "Alianzas para Lograr los Objetivos",
+                category: "alianzas",
+                color: "#19486A",
+                icon: "fa-handshake-angle",
+                desc: "Revitalizar la Alianza Mundial para el Desarrollo Sostenible a través de la cooperación y el trabajo en equipo.",
+                stat: "Ningún país u organización puede alcanzar la Agenda 2030 trabajando en solitario.",
+                challenges: ["Falta de financiamiento para países en desarrollo", "Poca transferencia tecnológica coordinada"],
+                actions: "Unir esfuerzos en proyectos escolares, alianzas con la comunidad y trabajo colaborativo."
+            }
+        ];
+
+        const teamMembers = [
+            { name: "Estudiante 1", ods: "ODS 1 & 2", role: "Coordinador de Personas", icon: "fa-user-astronaut" },
+            { name: "Estudiante 2", ods: "ODS 3 & 4", role: "Investigador Social", icon: "fa-user-doctor" },
+            { name: "Estudiante 3", ods: "ODS 5 & 6", role: "Analista de Equidad y Agua", icon: "fa-user-check" },
+            { name: "Estudiante 4", ods: "ODS 7 & 8", role: "Especialista en Energía y Empleo", icon: "fa-user-gear" },
+            { name: "Estudiante 5", ods: "ODS 9 & 10", role: "Redactor de Innovación", icon: "fa-user-pen" },
+            { name: "Estudiante 6", ods: "ODS 11 & 12", role: "Diseñador de Revista", icon: "fa-paint-brush" },
+            { name: "Estudiante 7", ods: "ODS 13 & 14", role: "Expositor de Clima y Océanos", icon: "fa-cloud-sun text-emerald-500" },
+            { name: "Estudiante 8", ods: "ODS 15, 16 & 17", role: "Moderador de Mesa Redonda", icon: "fa-users text-teal-500" }
+        ];
+
+        let initialComments = [
+            { author: "Profe Carlos", ods: "ODS 17: Alianzas", text: "Recuerden que para la mesa redonda lo importante es dialogar sobre los datos principales. ¡Excelente trabajo con la revista!", date: "Hace 10 min" },
+            { author: "Laura M.", ods: "ODS 13: Acción por el Clima", text: "Revisé la cifra de emisiones y es impactante. Llevaré esa propuesta de reducción para nuestro colegio.", date: "Hace 25 min" }
+        ];
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderODSCards(odsData);
+            renderTeam();
+            renderComments();
+            setupThemeToggle();
+            setupSearch();
+        });
+
+        // Function to Render ODS Cards
+        function renderODSCards(items) {
+            const container = document.getElementById('odsContainer');
+            if(!container) return;
+
+            if(items.length === 0) {
+                container.innerHTML = `
+                    <div class="col-span-full text-center py-12 text-slate-400">
+                        <i class="fa-solid fa-face-frown text-4xl mb-3"></i>
+                        <p>No se encontraron Objetivos que coincidan con la búsqueda.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = items.map(ods => `
+                <div onclick="openODSModal(${ods.id})" 
+                     class="group relative bg-white dark:bg-slate-900 rounded-3xl p-5 border border-slate-200/80 dark:border-slate-800 shadow-md hover:shadow-xl transition-all duration-300 cursor-pointer hover:-translate-y-1.5 flex flex-col justify-between overflow-hidden">
+                    
+                    <div class="absolute top-0 right-0 w-24 h-24 rounded-bl-full opacity-10 transition-opacity group-hover:opacity-20" style="background-color: ${ods.color}"></div>
+
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="w-10 h-10 rounded-2xl flex items-center justify-center text-white text-lg font-extrabold shadow-md" style="background-color: ${ods.color}">
+                                ${ods.id}
+                            </span>
+                            <div class="w-10 h-10 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                                <i class="fa-solid ${ods.icon}"></i>
+                            </div>
+                        </div>
+
+                        <h3 class="font-bold text-slate-900 dark:text-white text-base leading-snug group-hover:text-emerald-500 transition-colors">
+                            ${ods.title}
+                        </h3>
+
+                        <p class="text-xs text-slate-500 dark:text-slate-400 mt-2 line-clamp-3 leading-relaxed">
+                            ${ods.desc}
+                        </p>
+                    </div>
+
+                    <div class="mt-5 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between text-xs font-semibold" style="color: ${ods.color}">
+                        <span>Ver Ficha Completa</span>
+                        <i class="fa-solid fa-chevron-right group-hover:translate-x-1 transition-transform"></i>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterODS(category) {
+            // Update active state on buttons
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-emerald-500', 'text-white', 'shadow-md');
+                btn.classList.add('bg-slate-200', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+            });
+
+            event.currentTarget.classList.remove('bg-slate-200', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300');
+            event.currentTarget.classList.add('bg-emerald-500', 'text-white', 'shadow-md');
+
+            if(category === 'todos') {
+                renderODSCards(odsData);
+            } else {
+                const filtered = odsData.filter(item => item.category === category);
+                renderODSCards(filtered);
+            }
+        }
+
+        function setupSearch() {
+            const inputDesktop = document.getElementById('searchInput');
+            const inputMobile = document.getElementById('searchInputMobile');
+
+            const handleSearch = (e) => {
+                const query = e.target.value.toLowerCase().trim();
+                const filtered = odsData.filter(item => 
+                    item.title.toLowerCase().includes(query) || 
+                    item.desc.toLowerCase().includes(query) ||
+                    item.id.toString() === query
+                );
+                renderODSCards(filtered);
+            };
+
+            if(inputDesktop) inputDesktop.addEventListener('input', handleSearch);
+            if(inputMobile) inputMobile.addEventListener('input', handleSearch);
+        }
+
+        function openODSModal(id) {
+            const ods = odsData.find(item => item.id === id);
+            if(!ods) return;
+
+            const modal = document.getElementById('odsModal');
+            const header = document.getElementById('modalHeader');
+            
+            header.style.backgroundColor = ods.color;
+            document.getElementById('modalCategory').innerText = `ODS ${ods.id} • ${ods.category.toUpperCase()}`;
+            document.getElementById('modalTitle').innerText = ods.title;
+            document.getElementById('modalDesc').innerText = ods.desc;
+            document.getElementById('modalStat').innerText = ods.stat;
+            
+            // Render Challenges
+            const challengesList = document.getElementById('modalChallenges');
+            challengesList.innerHTML = ods.challenges.map(c => `<li>${c}</li>`).join('');
+
+            document.getElementById('modalActions').innerText = ods.actions;
+
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modal.querySelector('div').classList.remove('scale-95');
+                modal.querySelector('div').classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeODSModal() {
+            const modal = document.getElementById('odsModal');
+            modal.querySelector('div').classList.remove('scale-100');
+            modal.querySelector('div').classList.add('scale-95');
+            modal.classList.add('opacity-0');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 300);
+        }
+
+        function openFlipbookModal() {
+            const modal = document.getElementById('flipbookModal');
+            modal.classList.remove('hidden');
+        }
+
+        function closeFlipbookModal() {
+            const modal = document.getElementById('flipbookModal');
+            modal.classList.add('hidden');
+        }
+
+        // Render Comments
+        function renderComments() {
+            const feed = document.getElementById('commentsFeed');
+            if(!feed) return;
+
+            feed.innerHTML = initialComments.map(c => `
+                <div class="p-4 rounded-2xl bg-white dark:bg-slate-800/80 border border-slate-200/80 dark:border-slate-700/60 shadow-sm">
+                    <div class="flex items-center justify-between mb-2">
+                        <div class="flex items-center gap-2">
+                            <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-500 flex items-center justify-center font-bold text-xs">
+                                ${c.author.charAt(0)}
+                            </div>
+                            <div>
+                                <span class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white block">${c.author}</span>
+                                <span class="text-[10px] text-emerald-600 dark:text-emerald-400 font-medium">${c.ods}</span>
+                            </div>
+                        </div>
+                        <span class="text-[10px] text-slate-400">${c.date}</span>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-600 dark:text-slate-300 leading-relaxed pl-10">
+                        "${c.text}"
+                    </p>
+                </div>
+            `).join('');
+        }
+
+        // Handle Comment Submission
+        document.getElementById('commentForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const author = document.getElementById('commentAuthor').value;
+            const ods = document.getElementById('commentODS').value;
+            const text = document.getElementById('commentText').value;
+
+            initialComments.unshift({
+                author: author,
+                ods: ods,
+                text: text,
+                date: "Ahora mismo"
+            });
+
+            renderComments();
+            document.getElementById('commentForm').reset();
+        });
+
+        // Render Team Members
+        function renderTeam() {
+            const container = document.getElementById('teamContainer');
+            if(!container) return;
+
+            container.innerHTML = teamMembers.map(m => `
+                <div class="glass p-5 rounded-3xl border border-slate-200/60 dark:border-slate-800 text-center flex flex-col items-center hover:scale-105 transition-transform">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-100 dark:bg-emerald-950/80 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-2xl mb-3 shadow-inner">
+                        <i class="fa-solid ${m.icon}"></i>
+                    </div>
+                    <h4 class="font-bold text-slate-900 dark:text-white text-sm">${m.name}</h4>
+                    <span class="text-xs text-emerald-600 dark:text-emerald-400 font-semibold mt-0.5">${m.ods}</span>
+                    <span class="text-[11px] text-slate-500 dark:text-slate-400 mt-1">${m.role}</span>
+                </div>
+            `).join('');
+        }
+
+        function setupThemeToggle() {
+            const btn = document.getElementById('themeToggle');
+            btn.addEventListener('click', () => {
+                document.documentElement.classList.toggle('dark');
+            });
+
+            // Mobile menu toggle
+            const mobileBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            if(mobileBtn && mobileMenu) {
+                mobileBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+        }
+    </script>
+</body>
+</html>
